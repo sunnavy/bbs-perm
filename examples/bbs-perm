@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Glib qw/TRUE FALSE/;
+use Gtk2 '-init';
+use BBS::Perm qw/Feed IP URI/;
+
+#this is an example of BBS client, change it as you want, ;-)
+
+my $perm = BBS::Perm->new(
+    config => { file  => 'config.yml' },
+    perm   => { accel => 1 },
+);
+
+my $window = $perm->window;
+$window->signal_connect( destroy => sub { Gtk2->main_quit; } );
+
+my $vbox = Gtk2::VBox->new;
+$vbox->pack_start( $perm->term->widget, TRUE,  TRUE,  0 );
+$vbox->pack_start( $perm->feed->widget, FALSE, FALSE, 0 );
+$vbox->pack_start( $perm->ip->widget,   FALSE, FALSE, 0 );
+$window->add($vbox);
+$window->show_all;
+$window->maximize;
+
+$perm->connect( $ARGV[0] ) if $ARGV[0];
+
+Gtk2->main;
+

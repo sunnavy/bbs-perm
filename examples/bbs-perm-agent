@@ -1,0 +1,70 @@
+#!/usr/bin/perl 
+use strict;
+use warnings;
+use BBS::Perm::Config;
+use MIME::Base64;
+use Encode;
+use Expect;
+
+#this is an example of agent script, change it as you want, ;-)
+
+die "usage: $0 configfile sitename" unless @ARGV == 2;
+
+
+my ( $file, $sitename ) = @ARGV;
+my $conf = BBS::Perm::Config->new( file => $file )->setting($sitename);
+
+my ( $site, $user, $password, $cmd, $port )
+    = map { $conf->{$_} } qw/site username password protocol port/;
+
+$password = decode_base64($password);
+my $exp = Expect->new;
+
+$exp->slave->clone_winsize_from( \*STDIN );
+$exp->restart_timeout_upon_receive(1);
+
+my @args;
+if ( $cmd eq 'ssh' ) {
+    @args = ( $user ? $user . '@' . $site : $site, $port ? '-p ' . $port : (),
+    );
+    $exp->spawn( 'ssh', @args ) or die "can not spawn ssh\n";
+
+    #        $exp->debug(2);
+    $exp->expect(
+        10,
+        [   'password:',
+            sub {
+                shift->send( $password, "\n" );
+                $exp->exp_continue;
+                }
+        ],
+        [   '[RETURN]',
+            sub {
+                shift->send("\n");
+                }
+        ],
+    );
+}
+elsif ( $cmd eq 'telnet' ) {
+    @args = ( $site, $port ? $port : (), );
+    $exp->spawn( 'telnet', @args ) or die "can not spawn ssh\n";
+
+    $exp->expect(
+        10,
+        [   encode $conf->{encoding},
+            $conf->{prompt}{user},
+            sub {
+                shift->send( $user, "\n" );
+                $exp->exp_continue;
+                }
+        ],
+        [   encode $conf->{encoding},
+            $conf->{prompt}{password},
+            sub {
+                shift->send( $password, "\n" );
+                }
+        ],
+    );
+}
+$exp->set_seq( "\cu", sub { $exp->send_slow( 0, "r\nre\cw\n" ); return 1; } );
+$exp->interact( \*STDIN, "\cd" );

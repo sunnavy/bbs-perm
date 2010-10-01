@@ -1,0 +1,24 @@
+BBS-Perm version 0.0.3
+
+Want to build your own BBS client using Gtk2? Maybe BBS::Perm can help you.
+Although BBS::Perm is still very, very young, it can help you now.
+With BBS::Perm, you can:
+
+1. have multi terminals at the same time, and quickly switch among them.
+2. anti-idle
+3. commit sth. from file or even command output directly.
+4. get URIs and browse them quickly.
+5. get some useful information of IPv4 addresses.
+6. build your window layout freely.
+7. use your own agent script.
+
+see examples for some examples, ;-)
+
+The name `Perm' is the mergence of `Perl' and `Term'
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2007, sunnavy
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
