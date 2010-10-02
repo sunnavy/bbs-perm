@@ -10,9 +10,11 @@ BEGIN {
     if ($@) {
         require YAML;
         *_LoadFile = *YAML::LoadFile;
+        *_DumpFile = *YAML::DumpFile;
     }
     else {
         *_LoadFile = *YAML::Syck::LoadFile;
+        *_DumpFile = *YAML::Syck::DumpFile;
     }
 }
 
