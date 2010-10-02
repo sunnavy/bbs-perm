@@ -38,14 +38,8 @@ sub init {    # initiate a new term
         $term->set_encoding( $conf->{encoding} );
     }
 
-    if ( $conf->{font} && $conf->{font}{family} && $conf->{font}{size} ) {
-
-#        my $font = Pango::FontDescription->new;
-#        $font->set_family( $conf->{font}{family} );
-#        $font->set_size( $conf->{font}{size} );
-#        $font->set_stretch('normal');
-
-        my $font = Pango::FontDescription->from_string('WenQuanYi Micro Hei Mono 20');
+    if ( $conf->{font} ) {
+        my $font = Pango::FontDescription->from_string($conf->{font});
         $term->set_font( $font );
     }
 
