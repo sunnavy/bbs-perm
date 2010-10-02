@@ -120,6 +120,24 @@ sub _register_accel {
             ['visible'],
             sub { Gtk2->main_quit }
         ],
+        [
+            $accel{copy}->[0] || 'c',
+            $accel{copy}->[1] || ['mod1-mask'],
+            ['visible'],
+            sub {
+                my $focus = $self->window->get_focus;
+                $focus->copy_clipboard if $focus;
+            }
+        ],
+        [
+            $accel{paste}->[0] || 'v',
+            $accel{paste}->[1] || ['mod1-mask'],
+            ['visible'],
+            sub {
+                my $focus = $self->window->get_focus;
+                $focus->paste_clipboard if $focus;
+            }
+        ],
         [   
             $accel{fullscreen}->[0] || 'f',
             $accel{fullscreen}->[1] || ['control-mask', 'mod1-mask'],
@@ -136,12 +154,12 @@ sub _register_accel {
             }
         ],
         [   $accel{left}->[0] || '[',
-            $accel{left}->[1] || ['control-mask','mod1-mask'],
+            $accel{left}->[1] || ['mod1-mask'],
             ['visible'],
             sub { $self->_switch(-1) }
         ],
         [   $accel{right}->[0] || ']',
-            $accel{right}->[1] || ['control-mask', 'mod1-mask'],
+            $accel{right}->[1] || ['mod1-mask'],
             ['visible'],
             sub { $self->_switch(1) }
         ],
