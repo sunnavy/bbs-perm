@@ -11,7 +11,7 @@ use BBS::Perm::Config;
 use UNIVERSAL::require;
 use UNIVERSAL::moniker;
 
-use version; our $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.1.0');
 
 my %component = (
     IP   => 0,
@@ -121,13 +121,13 @@ sub _register_accel {
         [
             $accel{quit}->[0] || 'q',
             $accel{quit}->[1] || ['control-mask'],
-            ['visible'],
+            ['mask'],
             sub { Gtk2->main_quit }
         ],
         [
             $accel{copy}->[0] || 'c',
             $accel{copy}->[1] || ['mod1-mask'],
-            ['visible'],
+            ['mask'],
             sub {
                 my $focus = $self->window->get_focus;
                 $focus->copy_clipboard if $focus;
@@ -136,7 +136,7 @@ sub _register_accel {
         [
             $accel{paste}->[0] || 'v',
             $accel{paste}->[1] || ['mod1-mask'],
-            ['visible'],
+            ['mask'],
             sub {
                 my $focus = $self->window->get_focus;
                 $focus->paste_clipboard if $focus;
@@ -145,7 +145,7 @@ sub _register_accel {
         [
             $accel{fullscreen}->[0] || 'f',
             $accel{fullscreen}->[1] || [ 'control-mask', 'mod1-mask' ],
-            ['visible'],
+            ['mask'],
             sub {
                 if ($fullscreen) {
                     $self->window->unfullscreen;
@@ -160,13 +160,13 @@ sub _register_accel {
         [
             $accel{left}->[0] || '[',
             $accel{left}->[1] || ['mod1-mask'],
-            ['visible'],
+            ['mask'],
             sub { $self->_switch(-1) }
         ],
         [
             $accel{right}->[0] || ']',
             $accel{right}->[1] || ['mod1-mask'],
-            ['visible'],
+            ['mask'],
             sub { $self->_switch(1) }
         ],
     );
@@ -178,7 +178,7 @@ sub _register_accel {
             $mod = ['control-mask'] if lc $1 eq 'c';
             push @accels, [
                 $2, $mod,
-                ['visible'],
+                ['mask'],
                 sub {
                     $self->connect($site);
                   }
@@ -192,7 +192,7 @@ sub _register_accel {
               || 'f',
             $accel{feed}->[1]
               || ['control-mask'],
-            ['visible'],
+            ['mask'],
             sub {
                 if ( $self->feed->entry->has_focus ) {
                     $self->term->term->grab_focus if $self->term->term;
@@ -209,7 +209,7 @@ sub _register_accel {
             push @accels, [
                 $key,
                 ['mod1-mask'],
-                ['visible'],
+                ['mask'],
                 sub {
                     if ( $self->uri->uri->[ $key - 1 ] ) {
                         $self->uri->widget->set_uri(
@@ -310,12 +310,6 @@ __END__
 =head1 NAME
 
 BBS::Perm - a component for your own BBS client
-
-
-=head1 VERSION
-
-This document describes BBS::Perm version 0.0.3
-
 
 =head1 SYNOPSIS
 

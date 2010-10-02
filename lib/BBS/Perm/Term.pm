@@ -5,7 +5,6 @@ use strict;
 use Carp;
 use Glib qw/TRUE FALSE/;
 use Gnome2::Vte;
-use version; our $VERSION = qv('0.0.3');
 
 sub new {
     my ( $class, %opt ) = @_;
@@ -199,12 +198,6 @@ __END__
 =head1 NAME
 
 BBS::Perm::Term - a multi-terminals component based on Vte for BBS::Perm
-
-
-=head1 VERSION
-
-This document describes BBS::Perm::Term version 0.0.3
-
 
 =head1 SYNOPSIS
 

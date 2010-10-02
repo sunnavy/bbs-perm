@@ -7,7 +7,6 @@ use Gtk2;
 use Glib qw/TRUE FALSE/;
 use File::Slurp;
 use Encode;
-use version; our $VERSION = qv('0.0.3');
 
 sub new {
     my ( $class, %args ) = @_;
@@ -106,12 +105,6 @@ __END__
 =head1 NAME
 
 BBS::Perm::Plugin::Feed - a feed plugin for BBS::Perm
-
-
-=head1 VERSION
-
-This document describes BBS::Perm::Command version 0.0.3
-
 
 =head1 SYNOPSIS
 

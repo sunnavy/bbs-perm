@@ -5,8 +5,6 @@ use strict;
 use Carp;
 use Gtk2;
 
-use version; our $VERSION = qv('0.0.3');
-
 sub new {
     my ( $class, %opt ) = @_;
     my $widget = $opt{widget}  || Gtk2::LinkButton->new('');
@@ -62,10 +60,6 @@ __END__
 
 BBS::Perm::Plugin::URI - render quickly URI submittal for BBS::Perm
 
-
-=head1 VERSION
-
-This document describes BBS::Perm::Plugin::URI version 0.0.3
 
 =head1 SYNOPSIS
 
