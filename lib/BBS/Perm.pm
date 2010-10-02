@@ -115,8 +115,8 @@ sub _register_accel {
 
     my $fullscreen = 0;
     my @accels = (
-        [   $accel{left}->[0] || 'q',
-            $accel{left}->[1] || ['control-mask'],
+        [   $accel{quit}->[0] || 'q',
+            $accel{quit}->[1] || ['control-mask'],
             ['visible'],
             sub { Gtk2->main_quit }
         ],
