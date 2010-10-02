@@ -17,11 +17,16 @@ requires 'File::Slurp' => 0;
 
 requires( YAML => 0.35 ) unless can_use('YAML::Syck' => 0.71);
 
-build_requires 'Test::More' => 0;
+no_index directory => 't';
+no_index directory => 'xt';
 
-no_index directory => 'examples';
+install_script('bin/bbs-perm');
+install_script('bin/bbs-perm-agent');
 
 auto_install;
+
+tests('t/*.t');
+recursive_author_tests('xt/');
 
 WriteAll;
 
