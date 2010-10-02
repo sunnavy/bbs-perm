@@ -1,18 +1,18 @@
 ---
 global:  
     term:
-        # Default values for all sites
+# Default values for all sites
         protocol: ssh
         port: 22
         agent: 'bbs-perm-agent'
         font:
-            family: 'courier new'
+            family: 'WenQuanYi Zen Hei Mono'
             size: 20
-            anti_alias: 'force-disable'
+            anti_alias: 'use-default'
         encoding: gbk
+# send some character every 60 seconds for anti-idle
         timeout: 60
-                # send some character every 60 seconds for anti-idle
-        background_file: /home/picture/camel.jpg
+        background_file: /path/to/picture
         background_transparent: 0
         mouse_autohide: 0
         color:
@@ -22,19 +22,19 @@ global:
         default: 'http://www.google.com'
         browser: 'firefox -new-tab'
     ip:
-        qqwry: /opt/QQWry.Dat
+        qqwry: /opt/qqwry.dat
     feed:
         label: Feed
     title: 'bbs-perm'
     #default title
 newsmth:
+# use Alt+s to connect
     shortcut: 'M-s'
-        # use Alt+s to connect
     title: sunnavy@newsmth
     site: 60.2.251.8
     username: sunnavy
+# use MIME::Base64; encode_base64('password')
     password: cGFzc3dvcmQ=
-            # use MIME::Base64; encode_base64('password')
 
 zixia:
     shortcut: 'M-c'
