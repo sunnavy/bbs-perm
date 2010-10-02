@@ -1,4 +1,4 @@
-#!/usr/bin/perl 
+#!/usr/bin/env perl 
 use strict;
 use warnings;
 use BBS::Perm::Config;
@@ -16,7 +16,6 @@ my $conf = BBS::Perm::Config->new( file => $file )->setting($sitename);
 
 my ( $site, $user, $password, $cmd, $port )
     = map { $conf->{$_} } qw/site username password protocol port/;
-
 $password = decode_base64($password);
 my $exp = Expect->new;
 
