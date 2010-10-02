@@ -21,6 +21,7 @@ no_index directory => 'xt';
 
 install_script('bin/bbs-perm');
 install_script('bin/bbs-perm-agent');
+install_script('bin/bbs-perm-config');
 
 auto_install;
 
