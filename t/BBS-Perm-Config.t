@@ -10,10 +10,10 @@ BEGIN {
     eval { require YAML::Syck };
     if ($@) {
         require YAML;
-        *LoadFile = *YAML::LoadFile;
+        *_LoadFile = *YAML::LoadFile;
     }
     else {
-        *LoadFile = *YAML::Syck::LoadFile;
+        *_LoadFile = *YAML::Syck::LoadFile;
     }
 }
 
@@ -21,7 +21,7 @@ BEGIN { use_ok('BBS::Perm::Config'); }
 
 my $file = 't/config.yml';
 
-my $config = LoadFile($file);
+my $config = _LoadFile($file);
 tidy($config);
 
 my $t = BBS::Perm::Config->new;
@@ -46,8 +46,8 @@ for ( $t->sites ) {
 sub tidy {
     my $self = shift;
     for my $site ( grep { $_ ne 'global' } keys %$self ) {
-        for ( keys %{ $self->{global}{term} } ) {
-            $self->{$site}{$_} = $self->{global}{term}{$_}
+        for ( keys %{ $self->{global} } ) {
+            $self->{$site}{$_} = $self->{global}{$_}
                 unless defined $self->{$site}{$_};
         }
     }
