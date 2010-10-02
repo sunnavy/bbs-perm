@@ -31,6 +31,13 @@ if ( $cmd eq 'ssh' ) {
     #        $exp->debug(2);
     $exp->expect(
         10,
+        [
+            'continue connecting',
+            sub {
+                shift->send("yes", "\n");
+                $exp->exp_continue;
+            }
+        ],
         (
             $password
             ? [
