@@ -67,7 +67,8 @@ sub new {
             activate => sub {
                 my $text = $self->feed->text || q{};
                 $text =~ s/(\033)/$1$1/g;    # term itself will eat an escape
-                $self->term->term->feed_child_binary(encode 'gbk', $text);
+                $self->term->term->feed_child_binary(
+                    encode $self->term->encoding, $text );
                 $self->feed->entry->set_text(q{});
             }
         );
@@ -185,7 +186,7 @@ sub _register_accel {
             $accel{feed}->[0]
                 || 'f',
             $accel{feed}->[1]
-                || ['mod1-mask'],
+                || ['control-mask'],
             ['visible'],
             sub {
                 if ( $self->feed->entry->has_focus ) {
