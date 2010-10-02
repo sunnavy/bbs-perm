@@ -63,10 +63,10 @@ sub text {
     my $text;
 
     my $encoding = 'utf8';    # default is utf8
-    if ( $ENV{LLC_ALL} =~ /\.(.*)$/ ) {
+    if ( $ENV{LLC_ALL} && $ENV{LLC_ALL} =~ /\.(.*)$/ ) {
         $encoding = lc $1;
     }
-    elsif ( $ENV{LANG} =~ /\.(.*)$/ ) {
+    elsif ( $ENV{LANG} && $ENV{LANG} =~ /\.(.*)$/ ) {
         $encoding = lc $1;
     }
 
