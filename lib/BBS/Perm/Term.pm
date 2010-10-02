@@ -39,11 +39,14 @@ sub init {    # initiate a new term
     }
 
     if ( $conf->{font} && $conf->{font}{family} && $conf->{font}{size} ) {
-        my $font = Gtk2::Pango::FontDescription->new;
-        $font->set_family( $conf->{font}{family} );
-        $font->set_size( $conf->{font}{size} * 1000 );
-        $term->set_font_full( $font,
-            $conf->{font}{anti_alias} || 'force_disable' );
+
+#        my $font = Pango::FontDescription->new;
+#        $font->set_family( $conf->{font}{family} );
+#        $font->set_size( $conf->{font}{size} );
+#        $font->set_stretch('normal');
+
+        my $font = Pango::FontDescription->from_string('WenQuanYi Micro Hei Mono 20');
+        $term->set_font( $font );
     }
 
     if ( $conf->{color} ) {
@@ -143,10 +146,16 @@ sub switch {    # switch terms, -1 for left, 1 for right
 sub connect {
     my ( $self, $conf, $file, $site ) = @_;
     my $agent = $conf->{agent} || $self->{agent};
-    if ( $agent ) {
-        $self->term->fork_command( $agent,
-            [ $agent, $file, $site ],
-            undef, q{}, FALSE, FALSE, FALSE );
+    if ($agent) {
+        $self->term->fork_command(
+            $agent,
+            (
+                $conf->{protocol} =~ /ssh|telnet/
+                ? [ $agent, $file, $site ]
+                : [ $agent ]
+            ),
+            undef, q{}, FALSE, FALSE, FALSE
+        );
     }
     else {
         croak 'seems something wrong with your agent script';

@@ -6,21 +6,15 @@ use Carp;
 
 use version; our $VERSION = qv('0.0.3');
 
-=head2 LoadFile
-
-    YAML's LoadFile
-
-=cut
-
 BEGIN {
     local $@;
     eval { require YAML::Syck; };
     if ($@) {
         require YAML;
-        *LoadFile = *YAML::LoadFile;
+        *_LoadFile = *YAML::LoadFile;
     }
     else {
-        *LoadFile = *YAML::Syck::LoadFile;
+        *_LoadFile = *YAML::Syck::LoadFile;
     }
 }
 
@@ -38,7 +32,7 @@ sub new {
 
 sub load {
     my $self = shift;
-    $self->{config} = LoadFile(shift);
+    $self->{config} = _LoadFile(shift);
     $self->_tidy;
 }
 
@@ -46,8 +40,8 @@ sub load {
 sub _tidy {
     my $self = shift;
     for my $site ( grep { $_ ne 'global' } keys %{ $self->{config} } ) {
-        for ( keys %{ $self->{config}{global}{term} } ) {
-            $self->{config}{$site}{$_} = $self->{config}{global}{term}{$_}
+        for ( keys %{ $self->{config}{global} } ) {
+            $self->{config}{$site}{$_} = $self->{config}{global}{$_}
                 unless defined $self->{config}{$site}{$_};
         }
     }

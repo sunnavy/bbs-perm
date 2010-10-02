@@ -52,7 +52,7 @@ sub new {
             $_->require or die $@;
             my $key = $_->moniker;
             $self->{$key} = $_->new(
-                %{ $self->config->setting('global')->{$key} },
+                %{ $self->config->setting('global')->{plugins}{$key} },
                 defined $opt{$key} ? %{ $opt{$key} } : ()
             );
         }
@@ -113,14 +113,35 @@ sub _register_accel {
         }
     }
 
+    my $fullscreen = 0;
     my @accels = (
-        [   $accel{left}->[0] || 'j',
-            $accel{left}->[1] || ['mod1-mask'],
+        [   $accel{left}->[0] || 'q',
+            $accel{left}->[1] || ['control-mask'],
+            ['visible'],
+            sub { Gtk2->main_quit }
+        ],
+        [   
+            $accel{fullscreen}->[0] || 'f',
+            $accel{fullscreen}->[1] || ['control-mask', 'mod1-mask'],
+            ['visible'],
+            sub {
+                if ($fullscreen) {
+                    $self->window->unfullscreen;
+                    $fullscreen = 0;
+                }
+                else {
+                    $self->window->fullscreen;
+                    $fullscreen = 1;
+                }
+            }
+        ],
+        [   $accel{left}->[0] || '[',
+            $accel{left}->[1] || ['control-mask','mod1-mask'],
             ['visible'],
             sub { $self->_switch(-1) }
         ],
-        [   $accel{right}->[0] || 'k',
-            $accel{right}->[1] || ['mod1-mask'],
+        [   $accel{right}->[0] || ']',
+            $accel{right}->[1] || ['control-mask', 'mod1-mask'],
             ['visible'],
             sub { $self->_switch(1) }
         ],
@@ -146,7 +167,7 @@ sub _register_accel {
             $accel{feed}->[0]
                 || 'f',
             $accel{feed}->[1]
-                || ['control-mask'],
+                || ['mod1-mask'],
             ['visible'],
             sub {
                 if ( $self->feed->entry->has_focus ) {
