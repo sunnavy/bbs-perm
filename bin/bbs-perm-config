@@ -132,6 +132,13 @@ global:
             qqwry: /opt/qqwry.dat
         feed:
             label: Feed
+    shortcuts:
+        copy: 'M-c'
+        paste: 'M-v'
+        fullscreen: 'CM-f'
+        feed: 'C-f'
+        left_tab: 'M-['
+        right_tab: 'M-]'
 newsmth:
 # use Alt+j to connect
     shortcut: 'M-j'
