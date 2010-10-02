@@ -100,8 +100,8 @@ sub _switch {
 sub _register_accel {
     my $self  = shift;
     my %accel = ();
-    if ( $self->config->setting('global')->{accel} ) {
-        %accel = %{ $self->config->setting('global')->{accel} };
+    if ( $self->config->setting('global')->{shortcuts} ) {
+        %accel = %{ $self->config->setting('global')->{shortcuts} };
     }
 
     for ( keys %accel ) {
