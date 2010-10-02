@@ -28,7 +28,7 @@ if ( $args{help} ) {
 
 my $config = $args{config} || catfile( File::HomeDir->my_home, '.bbspermrc' );
 
-if ( !$config ) {
+if ( !-e $config ) {
     print "no config file, maybe you forgot to run bbs-perm-config --init";
     exit;
 }
