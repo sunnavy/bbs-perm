@@ -99,34 +99,28 @@ sub _switch {
 
 sub _register_accel {
     my $self  = shift;
-    my %accel = ();
-    if ( $self->config->setting('global')->{shortcuts} ) {
-        %accel = %{ $self->config->setting('global')->{shortcuts} };
-    }
-
-    for ( keys %accel ) {
-        my $value = $accel{$_};
-        my $mod   = ['mod1-mask'];
-        if ( $value =~ /^(C|M)-(.)/i ) {
-            $mod = ['control-mask'] if lc $1 eq 'c';
-            $accel{$_} = [ $2, $mod ];
-        }
-        else {
-            warn "accel $_ is incorrect";
-        }
-    }
+    my %accel = (
+        quit       => 'C-q',
+        copy       => 'M-c',
+        paste      => 'M-v',
+        fullscreen => 'CM-f',
+        left_tab   => 'M-[',
+        right_tab  => 'M-]',
+        feed       => 'C-f',
+        $self->config->setting('global')->{shortcuts}
+        ? %{ $self->config->setting('global')->{shortcuts} }
+        : ()
+    );
 
     my $fullscreen = 0;
-    my @accels     = (
+    my @accels = (
         [
-            $accel{quit}->[0] || 'q',
-            $accel{quit}->[1] || ['control-mask'],
+            $self->_parse_shortcut( $accel{quit} ),
             ['mask'],
             sub { Gtk2->main_quit }
         ],
         [
-            $accel{copy}->[0] || 'c',
-            $accel{copy}->[1] || ['mod1-mask'],
+            $self->_parse_shortcut( $accel{copy} ),
             ['mask'],
             sub {
                 my $focus = $self->window->get_focus;
@@ -134,8 +128,7 @@ sub _register_accel {
               }
         ],
         [
-            $accel{paste}->[0] || 'v',
-            $accel{paste}->[1] || ['mod1-mask'],
+            $self->_parse_shortcut( $accel{paste} ),
             ['mask'],
             sub {
                 my $focus = $self->window->get_focus;
@@ -143,8 +136,7 @@ sub _register_accel {
               }
         ],
         [
-            $accel{fullscreen}->[0] || 'f',
-            $accel{fullscreen}->[1] || [ 'control-mask', 'mod1-mask' ],
+            $self->_parse_shortcut( $accel{fullscreen} ),
             ['mask'],
             sub {
                 if ($fullscreen) {
@@ -158,40 +150,20 @@ sub _register_accel {
               }
         ],
         [
-            $accel{left}->[0] || '[',
-            $accel{left}->[1] || ['mod1-mask'],
+            $self->_parse_shortcut( $accel{left_tab} ),
             ['mask'],
             sub { $self->_switch(-1) }
         ],
         [
-            $accel{right}->[0] || ']',
-            $accel{right}->[1] || ['mod1-mask'],
+            $self->_parse_shortcut( $accel{right_tab} ),
             ['mask'],
             sub { $self->_switch(1) }
         ],
     );
 
-    for my $site ( $self->config->sites ) {
-        my $shortcut = $self->config->setting($site)->{shortcut};
-        my $mod      = ['mod1-mask'];
-        if ( $shortcut =~ /^(C|M)-(\w)/i ) {
-            $mod = ['control-mask'] if lc $1 eq 'c';
-            push @accels, [
-                $2, $mod,
-                ['mask'],
-                sub {
-                    $self->connect($site);
-                  }
-            ];
-        }
-    }
-
     if ( $component{Feed} ) {
         push @accels, [
-            $accel{feed}->[0]
-              || 'f',
-            $accel{feed}->[1]
-              || ['control-mask'],
+            $self->_parse_shortcut( $accel{feed} ),
             ['mask'],
             sub {
                 if ( $self->feed->entry->has_focus ) {
@@ -227,10 +199,50 @@ sub _register_accel {
         }
     }
 
+    for my $site ( $self->config->sites ) {
+        my $shortcut = $self->config->setting($site)->{shortcut};
+        next unless $shortcut;
+        push @accels, [
+            $self->_parse_shortcut($shortcut),
+            ['mask'],
+            sub {
+                $self->connect($site);
+              }
+        ];
+    }
+
+
     my $window = $self->{window};
     my $accel  = Gtk2::AccelGroup->new;
     $accel->connect( ord $_->[0], @$_[ 1 .. 3 ] ) for @accels;
     $window->add_accel_group($accel);
+}
+
+sub _parse_shortcut {
+    my $self = shift;
+    my $str = shift or return;
+
+    my %mask;
+    return unless $str =~ /([CMSW]+)-(.)/i;
+    my $char = $2;
+    for ( split //, $1 ) {
+        if (/C/i) {
+            $mask{'control-mask'} = 1;
+        }
+        elsif (/M/i) {
+            $mask{'mod1-mask'} = 1;
+        }
+        elsif (/S/i) {
+            $mask{'shift-mask'} = 1;
+        }
+        elsif (/W/i) {
+            $mask{'super-mask'} = 1;
+        }
+        else {
+            warn "invalid mask: $_";
+        }
+    }
+    return ( $char, [ keys %mask ] );
 }
 
 sub import {
