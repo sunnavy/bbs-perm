@@ -140,13 +140,26 @@ sub switch {    # switch terms, -1 for left, 1 for right
 sub connect {
     my ( $self, $conf, $file, $site ) = @_;
     my $agent = $conf->{agent} || $self->{agent};
+
+# check if it's a perl script
+    my $use_current_perl;
+    if ( -T $agent ) {
+        open my $fh, '<', $agent or die "can't open $agent: $!";
+        my $shebang = <$fh>;
+        if ( $shebang =~ m{#!/usr/bin/(?:perl|env\s+perl)} ) {
+            $use_current_perl = 1;
+        }
+    }
+
     if ($agent) {
         $self->term->fork_command(
-            $agent,
+            ( $use_current_perl ? $^X : $agent ),
             (
-                $conf->{protocol} =~ /ssh|telnet/
-                ? [ $agent, $file, $site ]
-                : [ $agent ]
+                [
+                    ( $use_current_perl ? ($^X) : () ),
+                    $agent,
+                    $conf->{protocol} =~ /ssh|telnet/ ? ( $file, $site ) : ()
+                ]
             ),
             undef, q{}, FALSE, FALSE, FALSE
         );
