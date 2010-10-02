@@ -4,7 +4,6 @@ name 'BBS-Perm';
 license 'perl';
 all_from 'lib/BBS/Perm.pm';
 author 'sunnavy <sunnavy@gmail.com>';
-requires version => 0;
 requires Encode => 0;
 requires 'UNIVERSAL::require' => 0;
 requires 'UNIVERSAL::moniker' => 0;
