@@ -116,11 +116,12 @@ global:
     port: 22
     agent: 'bbs-perm-agent'
     font: 'WenQuanYi Micro Hei Mono 20'
-# send some character every 60 seconds for anti-idle
     timeout: 60
     background_file: /path/to/picture
     background_transparent: 0
     mouse_autohide: 0
+    default:
+        - bash
     color:
         background: black
         foreground: white
@@ -151,4 +152,5 @@ bash:
     title: bash
     protocol: 'bash'
     agent: 'bash'
+    timeout: 0
 
