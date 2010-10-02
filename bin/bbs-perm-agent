@@ -16,7 +16,7 @@ my $conf = BBS::Perm::Config->new( file => $file )->setting($sitename);
 
 my ( $site, $user, $password, $cmd, $port )
     = map { $conf->{$_} } qw/site username password protocol port/;
-$password = decode_base64($password);
+$password = decode_base64($password) if $password;
 my $exp = Expect->new;
 
 $exp->slave->clone_winsize_from( \*STDIN );
@@ -31,16 +31,22 @@ if ( $cmd eq 'ssh' ) {
     #        $exp->debug(2);
     $exp->expect(
         10,
-        [   'password:',
-            sub {
-                shift->send( $password, "\n" );
-                $exp->exp_continue;
-                }
-        ],
-        [   '[RETURN]',
+        (
+            $password
+            ? [
+                'password:',
+                sub {
+                    shift->send( $password, "\n" );
+                    $exp->exp_continue;
+                  }
+              ]
+            : ()
+        ),
+        [
+            '[RETURN]',
             sub {
                 shift->send("\n");
-                }
+              }
         ],
     );
 }
