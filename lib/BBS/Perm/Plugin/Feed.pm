@@ -72,7 +72,7 @@ sub text {
     if ( $input =~ /^\s*:\s*(.*)/ ) {
         $text = decode $encoding, `$1`;
     }
-    elsif ( -r $input ) {
+    elsif ( -f $input ) {
         $text = decode $encoding, read_file($input);
     }
     else {
