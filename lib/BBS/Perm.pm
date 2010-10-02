@@ -85,8 +85,9 @@ sub _clean {                                 # be called when an agent exited
         $self->window->set_title( $self->term->title );
     }
     else {
-        $self->window->set_title($self->config->setting('global')->{title} ||
-                'bbs-perm' );
+#        $self->window->set_title($self->config->setting('global')->{title} ||
+#                'bbs-perm' );
+         Gtk2->main_quit;
     }
 }
 
