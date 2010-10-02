@@ -222,6 +222,17 @@ sub import {
 
 sub connect {
     my ( $self, $site ) = @_;
+    if ( !$site ) {
+# get the default ones
+        my $default = $self->config->setting('global')->{default};
+        if ( $default ) {
+            for ( ref $default eq 'ARRAY' ? @$default : $default ) {
+                $self->connect( $_ );
+            }
+        }
+        return;
+    }
+
     my $conf = $self->config->setting($site);
     $self->term->init($conf);
 

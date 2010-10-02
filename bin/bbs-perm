@@ -22,8 +22,16 @@ $vbox->pack_start( $perm->ip->widget,   FALSE, FALSE, 0 );
 $window->add($vbox);
 $window->show_all;
 $window->maximize;
+$window->set_keep_above(1);
 
-$perm->connect( $ARGV[0] ) if $ARGV[0];
+if (@ARGV) {
+    for (@ARGV) {
+        $perm->connect($_);
+    }
+}
+else {
+    $perm->connect();
+}
 
 Gtk2->main;
 
