@@ -70,6 +70,7 @@ sub new {
                 $self->term->term->feed_child_binary(
                     encode $self->term->encoding, $text );
                 $self->feed->entry->set_text(q{});
+                $self->term->term->grab_focus;
             }
         );
     }
@@ -184,9 +185,9 @@ sub _register_accel {
     if ( $component{Feed} ) {
         push @accels, [
             $accel{feed}->[0]
-                || 'f',
+              || 'f',
             $accel{feed}->[1]
-                || ['control-mask'],
+              || ['control-mask'],
             ['visible'],
             sub {
                 if ( $self->feed->entry->has_focus ) {
@@ -195,9 +196,8 @@ sub _register_accel {
                 else {
                     $self->feed->entry->grab_focus;
                 }
-                }
-            ],
-            ;
+            },
+        ];
     }
 
     if ( $component{URI} ) {
