@@ -148,19 +148,6 @@ Get our object's widget.
 
 =back
 
-=head1 DEPENDENCIES
-
-L<Gtk2>, <File::Slurp>, L<version>
-
-=head1 INCOMPATIBILITIES
-
-None reported.
-
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
 =head1 AUTHOR
 
 sunnavy  C<< <sunnavy@gmail.com> >>

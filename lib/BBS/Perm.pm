@@ -11,7 +11,7 @@ use BBS::Perm::Config;
 use UNIVERSAL::require;
 use UNIVERSAL::moniker;
 
-our $VERSION = qv('0.01');
+our $VERSION = '0.01';
 
 my %component = (
     IP   => 0,
@@ -322,13 +322,13 @@ BBS::Perm - a component for your own BBS client
 
 =head1 DESCRIPTION
 
-Want to build your own BBS client using Gtk2? Maybe BBS::Perm can help you.
+Want to build your own BBS client using Gtk2? Maybe L<BBS::Perm> can help you.
 
-Although BBS::Perm is still very, very young, it can help you now.
+The name C<Perm> is the mergence of C<Perl> and C<Term>
 
-With BBS::Perm, you can:
+With L<BBS::Perm>, you can:
 
-1. have multi terminals at the same time, and quickly switch among them.
+1. have multiple terminals at the same time, and quickly switch among them.
 
 2. anti-idle
 
@@ -336,7 +336,7 @@ With BBS::Perm, you can:
 
 4. extract URIs and browse them quickly.
 
-5. get some useful information of IPv4 addresses.
+5. get useful information of IPv4 addresses, thanks to L<IP::QQWry>.
 
 6. build your window layout freely.
 
@@ -390,7 +390,7 @@ return the main window object, which is a Gtk2::Window object.
 
 =head1 DEPENDENCIES
 
-L<Gtk2>, L<Regexp::Common>, L<UNIVERSAL::require>, L<UNIVERSAL::moniker>,L<version>
+L<Gtk2>, L<Regexp::Common>, L<UNIVERSAL::require>, L<UNIVERSAL::moniker>
 
 =head1 INCOMPATIBILITIES
 

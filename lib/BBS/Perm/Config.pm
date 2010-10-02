@@ -110,19 +110,6 @@ return config file name
 
 =back
 
-=head1 DEPENDENCIES
-
-L<YAML>, L<YAML::Syck>, L<version>
-
-=head1 INCOMPATIBILITIES
-
-None reported.
-
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
 =head1 AUTHOR
 
 sunnavy  C<< <sunnavy@gmail.com> >>

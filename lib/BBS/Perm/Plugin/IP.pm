@@ -145,19 +145,6 @@ return out object's widget, which is a Gtk2::Statusbar object.
 
 =back
 
-=head1 DEPENDENCIES
-
-L<IP::QQWry>, L<Regexp::Common>, L<Encode>, L<version>
-
-=head1 INCOMPATIBILITIES
-
-None reported.
-
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
 =head1 AUTHOR
 
 sunnavy  C<< <sunnavy@gmail.com> >>

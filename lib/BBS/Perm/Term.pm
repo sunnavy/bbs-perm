@@ -265,18 +265,6 @@ when an agent script exited, this method will be call, for cleaning, of cause.
 
 =back
 
-=head1 DEPENDENCIES
-
-L<Gnome2::Vte>, L<Gtk2>, L<version> 
-
-=head1 INCOMPATIBILITIES
-
-None reported.
-
-=head1 BUGS AND LIMITATIONS
-
-None reported.
-
 =head1 AUTHOR
 
 sunnavy  C<< <sunnavy@gmail.com> >>

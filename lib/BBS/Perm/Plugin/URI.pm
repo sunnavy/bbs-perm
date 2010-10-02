@@ -124,23 +124,9 @@ clear URIs in our object.
 
 =back
 
-=head1 DEPENDENCIES
-
-L<Gtk2>, L<version>
-
-=head1 INCOMPATIBILITIES
-
-None reported.
-
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
 =head1 AUTHOR
 
 sunnavy  C<< <sunnavy@gmail.com> >>
-
 
 =head1 LICENCE AND COPYRIGHT
 
