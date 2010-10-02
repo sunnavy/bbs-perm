@@ -10,9 +10,9 @@ use version; our $VERSION = qv('0.0.3');
 sub new {
     my ( $class, %opt ) = @_;
     my $self = {%opt};
-    $self->{widget} = Gtk2::HBox->new unless $self->{widget};
-    $self->{terms}  = [];
-    $self->{titles} = [];
+    $self->{widget}   = Gtk2::HBox->new unless $self->{widget};
+    $self->{terms}    = [];
+    $self->{titles}   = [];
     $self->{encoding} = [];
     bless $self, ref $class || $class;
 }
@@ -22,7 +22,7 @@ sub init {    # initiate a new term
     my $term = Gnome2::Vte::Terminal->new;
     push @{ $self->{terms} },  $term;
     push @{ $self->{titles} }, $conf->{title}
-        || $conf->{username} . '@' . $conf->{site};
+      || $conf->{username} . '@' . $conf->{site};
     push @{ $self->{encoding} }, $conf->{encoding};
 
     if ( defined $self->{current} ) {    # has term already?
@@ -39,8 +39,8 @@ sub init {    # initiate a new term
     }
 
     if ( $conf->{font} ) {
-        my $font = Pango::FontDescription->from_string($conf->{font});
-        $term->set_font( $font );
+        my $font = Pango::FontDescription->from_string( $conf->{font} );
+        $term->set_font($font);
     }
 
     if ( $conf->{color} ) {
@@ -49,7 +49,7 @@ sub init {    # initiate a new term
             if ( $conf->{color}{$_} ) {
                 no strict 'refs';
                 "Gnome2::Vte::Terminal::set_color_$_"->(
-                    $term, Gtk2::Gdk::Color->parse($conf->{color}{$_})
+                    $term, Gtk2::Gdk::Color->parse( $conf->{color}{$_} )
                 );
             }
         }
@@ -64,17 +64,17 @@ sub init {    # initiate a new term
     }
 
     if ( defined $conf->{mouse_autohide} ) {
-        $term->set_mouse_autohide($conf->{mouse_autohide});
+        $term->set_mouse_autohide( $conf->{mouse_autohide} );
     }
 
     my $timeout = defined $conf->{timeout} ? $conf->{timeout} : 60;
-    if ( $timeout ) {
-    $term->{timer} = Glib::Timeout->add( 1000 * $timeout,
-        sub { $term->feed_child( chr 0 ); return TRUE; }, $term );
+    if ($timeout) {
+        $term->{timer} = Glib::Timeout->add( 1000 * $timeout,
+            sub { $term->feed_child( chr 0 ); return TRUE; }, $term );
     }
 }
 
-sub clean {                              # called when child exited
+sub clean {    # called when child exited
     my $self = shift;
     my ( $current, $new_pos );
     $new_pos = $current = $self->{current};
@@ -96,13 +96,13 @@ sub clean {                              # called when child exited
     $self->term->destroy;
     splice @{ $self->{terms} }, $current, 1;
     $self->{current} = $new_pos == 0 ? 0 : $new_pos - 1
-        if defined $new_pos;
+      if defined $new_pos;
 }
 
 sub term {    # get current terminal
     my $self = shift;
     return $self->{terms}->[ $self->{current} ]
-        if defined $self->{current};
+      if defined $self->{current};
 }
 
 sub switch {    # switch terms, -1 for left, 1 for right
@@ -141,7 +141,7 @@ sub connect {
     my ( $self, $conf, $file, $site ) = @_;
     my $agent = $conf->{agent} || $self->{agent};
 
-# check if it's a perl script
+    # check if it's a perl script
     my $use_current_perl;
     if ( -T $agent ) {
         open my $fh, '<', $agent or die "can't open $agent: $!";
@@ -178,7 +178,6 @@ sub encoding {
     my $self = shift;
     return $self->{encoding}[ $self->{current} ];
 }
-
 
 sub text {    # get current terminal's text
               # list context is needed.

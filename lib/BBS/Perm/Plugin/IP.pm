@@ -19,12 +19,11 @@ sub new {
     my $widget = $opt{widget} || Gtk2::Statusbar->new;
     my $id     = $widget->get_context_id('ip');
     my $self   = { ip => {} };
-    $self->{widget} = $widget;
-    $self->{_id}    = $id;
+    $self->{widget}    = $widget;
+    $self->{_id}       = $id;
     $self->{_encoding} = $opt{encoding} || 'gbk';
     bless $self, ref $class || $class;
 }
-
 
 sub add {
     my ( $self, $input ) = @_;
@@ -60,9 +59,10 @@ sub show {
 
     if ( $self->ip ) {
         for ( sort keys %{ $self->ip } ) {
-            my $info = decode( $self->{_encoding}, join '',
-                grep {$_} @{ $self->ip->{$_} })
-                || q{};
+            my $info =
+              decode( $self->{_encoding}, join '',
+                grep { $_ } @{ $self->ip->{$_} } )
+              || q{};
             $show .= $_ . ': ' . $info . "; ";
         }
     }

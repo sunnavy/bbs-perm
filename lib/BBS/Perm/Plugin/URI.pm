@@ -22,7 +22,7 @@ sub _browse {
     my $uri = $self->widget->get_uri;
     if ($uri) {
         system("$cmd \Q$uri\E &")
-            and warn 'can not run browser';
+          and warn 'can not run browser';
     }
 }
 
@@ -42,13 +42,12 @@ sub pop {
 
 sub uri {
     my $self = shift;
-    return [@{$self}[1 .. $#{$self}]];
+    return [ @{$self}[ 1 .. $#{$self} ] ];
 }
 
 sub size {
-    return @{shift->uri};
+    return @{ shift->uri };
 }
-
 
 sub clear {
     my $self = shift;

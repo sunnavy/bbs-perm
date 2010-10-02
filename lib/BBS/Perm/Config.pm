@@ -36,13 +36,12 @@ sub load {
     $self->_tidy;
 }
 
-
 sub _tidy {
     my $self = shift;
     for my $site ( grep { $_ ne 'global' } keys %{ $self->{config} } ) {
         for ( keys %{ $self->{config}{global} } ) {
             $self->{config}{$site}{$_} = $self->{config}{global}{$_}
-                unless defined $self->{config}{$site}{$_};
+              unless defined $self->{config}{$site}{$_};
         }
     }
 }

@@ -51,10 +51,9 @@ sub new {
             $_ = 'BBS::Perm::Plugin::' . $_;
             $_->require or die $@;
             my $key = $_->moniker;
-            $self->{$key} = $_->new(
-                %{ $self->config->setting('global')->{plugins}{$key} },
-                defined $opt{$key} ? %{ $opt{$key} } : ()
-            );
+            $self->{$key} =
+              $_->new( %{ $self->config->setting('global')->{plugins}{$key} },
+                defined $opt{$key} ? %{ $opt{$key} } : () );
         }
     }
 
@@ -85,9 +84,10 @@ sub _clean {                                 # be called when an agent exited
         $self->window->set_title( $self->term->title );
     }
     else {
-#        $self->window->set_title($self->config->setting('global')->{title} ||
-#                'bbs-perm' );
-         Gtk2->main_quit;
+
+  #        $self->window->set_title($self->config->setting('global')->{title} ||
+  #                'bbs-perm' );
+        Gtk2->main_quit;
     }
 }
 
@@ -117,8 +117,9 @@ sub _register_accel {
     }
 
     my $fullscreen = 0;
-    my @accels = (
-        [   $accel{quit}->[0] || 'q',
+    my @accels     = (
+        [
+            $accel{quit}->[0] || 'q',
             $accel{quit}->[1] || ['control-mask'],
             ['visible'],
             sub { Gtk2->main_quit }
@@ -130,7 +131,7 @@ sub _register_accel {
             sub {
                 my $focus = $self->window->get_focus;
                 $focus->copy_clipboard if $focus;
-            }
+              }
         ],
         [
             $accel{paste}->[0] || 'v',
@@ -139,11 +140,11 @@ sub _register_accel {
             sub {
                 my $focus = $self->window->get_focus;
                 $focus->paste_clipboard if $focus;
-            }
+              }
         ],
-        [   
+        [
             $accel{fullscreen}->[0] || 'f',
-            $accel{fullscreen}->[1] || ['control-mask', 'mod1-mask'],
+            $accel{fullscreen}->[1] || [ 'control-mask', 'mod1-mask' ],
             ['visible'],
             sub {
                 if ($fullscreen) {
@@ -154,14 +155,16 @@ sub _register_accel {
                     $self->window->fullscreen;
                     $fullscreen = 1;
                 }
-            }
+              }
         ],
-        [   $accel{left}->[0] || '[',
+        [
+            $accel{left}->[0] || '[',
             $accel{left}->[1] || ['mod1-mask'],
             ['visible'],
             sub { $self->_switch(-1) }
         ],
-        [   $accel{right}->[0] || ']',
+        [
+            $accel{right}->[0] || ']',
             $accel{right}->[1] || ['mod1-mask'],
             ['visible'],
             sub { $self->_switch(1) }
@@ -178,7 +181,7 @@ sub _register_accel {
                 ['visible'],
                 sub {
                     $self->connect($site);
-                    }
+                  }
             ];
         }
     }
@@ -243,11 +246,12 @@ sub import {
 sub connect {
     my ( $self, $site ) = @_;
     if ( !$site ) {
-# get the default ones
+
+        # get the default ones
         my $default = $self->config->setting('global')->{default};
-        if ( $default ) {
+        if ($default) {
             for ( ref $default eq 'ARRAY' ? @$default : $default ) {
-                $self->connect( $_ );
+                $self->connect($_);
             }
         }
         return;
@@ -261,8 +265,7 @@ sub connect {
             $self->_contents_changed;
         }
     );
-    $self->term->term->signal_connect( child_exited => sub { $self->_clean }
-    );
+    $self->term->term->signal_connect( child_exited => sub { $self->_clean } );
     $self->window->set_title( $self->term->title );
 
     $self->term->connect( $conf, $self->config->file, $site );
@@ -275,7 +278,7 @@ sub _contents_changed {
     if ( $component{URI} ) {
         $self->uri->clear;    # clean previous uri
         $self->uri->push($1)
-            while $text =~ /($RE{URI}{HTTP} | $RE{URI}{FTP})/gx;
+          while $text =~ /($RE{URI}{HTTP} | $RE{URI}{FTP})/gx;
 
         #        $self->uri->widget->set_label( $self->uri->show );
     }
