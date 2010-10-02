@@ -8,7 +8,7 @@ use File::HomeDir;
 use File::Spec::Functions 'catfile';
 my %args;
 die 'unknown option'
-  unless GetOptions( \%args, 'file|c=s' );
+  unless GetOptions( \%args, 'file|c=s', 'help|h' );
 
 my $USAGE = <<'END';
 USAGE: bbs-perm-config OPTIONS
@@ -19,7 +19,7 @@ EXAMPLES:
     bbs-perm-config global.protocol=ssh               # set global protocol
 END
 
-if ( $args{help} ) {
+if ( $args{help} || !@ARGV ) {
     print $USAGE;
     exit;
 }

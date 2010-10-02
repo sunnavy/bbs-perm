@@ -6,10 +6,16 @@ use MIME::Base64;
 use Encode;
 use Expect;
 
-#this is an example of agent script, change it as you want, ;-)
+my $USAGE = <<'END';
+USAGE: bbs-perm-agent configfile sitename
+EXAMPLES:
+    bbs-perm-agent /path/to/bbspermrc newsmth    # connect newsmth
+END
 
-die "usage: $0 configfile sitename" unless @ARGV == 2;
-
+unless ( @ARGV == 2 ) {
+    print $USAGE;
+    exit;
+}
 
 my ( $file, $sitename ) = @ARGV;
 my $conf = BBS::Perm::Config->new( file => $file )->setting($sitename);
@@ -80,3 +86,4 @@ elsif ( $cmd eq 'telnet' ) {
 }
 $exp->set_seq( "\cu", sub { $exp->send_slow( 0, "r\nre\cw\n" ); return 1; } );
 $exp->interact( \*STDIN, "\cd" );
+
