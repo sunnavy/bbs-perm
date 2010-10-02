@@ -3,7 +3,7 @@ use inc::Module::Install 0.46;
 name 'BBS-Perm';
 license 'perl';
 all_from 'lib/BBS/Perm.pm';
-author 'sunnavy <sunnavy@gmail.com>';
+readme_from 'lib/BBS/Perm.pm';
 requires Encode => 0;
 requires 'UNIVERSAL::require' => 0;
 requires 'UNIVERSAL::moniker' => 0;
