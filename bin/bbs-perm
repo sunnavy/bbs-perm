@@ -47,7 +47,7 @@ $vbox->pack_start( $perm->feed->widget, FALSE, FALSE, 0 );
 $vbox->pack_start( $perm->ip->widget,   FALSE, FALSE, 0 );
 $window->add($vbox);
 $window->show_all;
-$window->maximize;
+#$window->maximize;
 $window->set_keep_above(1);
 
 if (@ARGV) {
