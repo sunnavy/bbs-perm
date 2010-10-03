@@ -106,6 +106,7 @@ sub _register_accel {
         fullscreen => 'CM-f',
         left_tab   => 'M-[',
         right_tab  => 'M-]',
+        close_tab  => 'M-w',
         feed       => 'C-f',
         $self->config->setting('global')->{shortcuts}
         ? %{ $self->config->setting('global')->{shortcuts} }
@@ -118,6 +119,11 @@ sub _register_accel {
             $self->_parse_shortcut( $accel{quit} ),
             ['mask'],
             sub { Gtk2->main_quit }
+        ],
+        [
+            $self->_parse_shortcut( $accel{close_tab} ),
+            ['mask'],
+            sub { $self->term->clean }
         ],
         [
             $self->_parse_shortcut( $accel{copy} ),
@@ -275,8 +281,9 @@ sub connect {
     $self->term->term->signal_connect(
         contents_changed => sub {
             $self->_contents_changed;
-        }
+        },
     );
+
     $self->term->term->signal_connect( child_exited => sub { $self->_clean } );
     $self->window->set_title( $self->term->title );
 
