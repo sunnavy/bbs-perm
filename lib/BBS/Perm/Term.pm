@@ -62,6 +62,11 @@ sub init {    # initiate a new term
         $term->set_background_transparent(1);
     }
 
+    if ( defined $conf->{opacity} ) {
+        $conf->{opacity} *= 65535 if $conf->{opacity} <= 1;
+        $term->set_opacity($conf->{opacity});
+    }
+
     if ( defined $conf->{mouse_autohide} ) {
         $term->set_mouse_autohide( $conf->{mouse_autohide} );
     }

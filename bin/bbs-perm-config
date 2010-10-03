@@ -119,6 +119,7 @@ global:
     timeout: 60
     background_file: /path/to/picture
     background_transparent: 0
+    opacity: 0.8
     mouse_autohide: 0
     default:
         - bash
