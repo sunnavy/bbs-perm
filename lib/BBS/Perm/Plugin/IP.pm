@@ -21,6 +21,7 @@ sub new {
     $self->{widget}    = $widget;
     $self->{_id}       = $id;
     $self->{_encoding} = $opt{encoding} || 'gbk';
+    $self->{_length}   = $opt{length} || 80;
     bless $self, ref $class || $class;
 }
 
@@ -64,6 +65,9 @@ sub show {
               || q{};
             $show .= $_ . ': ' . $info . "; ";
         }
+
+        my $length = $self->{_length};
+        $show = sprintf( "%${length}s", $show );
     }
     $self->widget->pop( $self->_id );
     $self->widget->push( $self->_id, $show );
