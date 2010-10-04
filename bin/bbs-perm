@@ -42,9 +42,17 @@ my $window = $perm->window;
 $window->signal_connect( destroy => sub { Gtk2->main_quit; } );
 
 my $vbox = Gtk2::VBox->new;
-$vbox->pack_start( $perm->term->widget, TRUE,  TRUE,  0 );
-$vbox->pack_start( $perm->feed->widget, FALSE, FALSE, 0 );
-$vbox->pack_start( $perm->ip->widget,   FALSE, FALSE, 0 );
+my $boxes = $perm->config->setting('global')->{boxes}
+  || [ 'term', 'feed', 'ip' ];
+for (@$boxes) {
+    my $box = lc $_;
+    if ( $box eq 'term' ) {
+        $vbox->pack_start( $perm->term->widget, TRUE,  TRUE,  0 );
+    }
+    else {
+        $vbox->pack_start( $perm->$box->widget, FALSE, FALSE, 0 );
+    }
+}
 $window->add($vbox);
 $window->show_all;
 #$window->maximize;
