@@ -20,8 +20,8 @@ unless ( @ARGV == 2 ) {
 my ( $file, $sitename ) = @ARGV;
 my $conf = BBS::Perm::Config->new( file => $file )->setting($sitename);
 
-my ( $site, $user, $password, $cmd, $port )
-    = map { $conf->{$_} } qw/site username password protocol port/;
+my ( $site, $user, $password, $cmd, $version, $port )
+    = map { $conf->{$_} } qw/site username password protocol protocol_version port/;
 $password = decode_base64($password) if $password;
 my $exp = Expect->new;
 
@@ -32,7 +32,7 @@ my @args;
 if ( $cmd eq 'ssh' ) {
     @args = ( $user ? $user . '@' . $site : $site, $port ? '-p ' . $port : (),
     );
-    $exp->spawn( 'ssh', @args ) or die "can not spawn ssh\n";
+    $exp->spawn( 'ssh', ( $version ? '-' . $version : () ), @args ) or die "can not spawn ssh\n";
 
     #        $exp->debug(2);
     $exp->expect(
