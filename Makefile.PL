@@ -13,6 +13,7 @@ requires 'Regexp::Common' => '2.120';
 requires 'IP::QQWry' => '0.0.13'; 
 requires Expect => 0;
 requires 'File::Slurp' => 0;
+requires 'File::HomeDir' => 0;
 
 requires( YAML => 0.35 ) unless can_use('YAML::Syck' => 0.71);
 
