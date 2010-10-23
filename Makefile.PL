@@ -14,6 +14,7 @@ requires 'IP::QQWry' => '0.0.13';
 requires Expect => 0;
 requires 'File::Slurp' => 0;
 requires 'File::HomeDir' => 0;
+requires 'IO::Stty' => 0; # or Expect won't work well
 
 requires( YAML => 0.35 ) unless can_use('YAML::Syck' => 0.71);
 
