@@ -189,16 +189,20 @@ sub _register_accel {
                 ['mod1-mask'],
                 ['mask'],
                 sub {
-                    if ( $self->uri->uri->[ $key - 1 ] ) {
-                        $self->uri->widget->set_uri(
-                              $key == 0
-                            ? $self->config->get_value( global => 'uri' )
-                            : $self->uri->uri->[ $key - 1 ]
-                        );
+                    my $uri;
+                    if ( $key > 0 ) {
+                        if ( $key == 9 ) {
+                            # 9 means last one
+                            $uri = $self->uri->uri->[-1];
+                        }
+                        else {
+                            $uri = $self->uri->uri->[ $key - 1 ];
+                        }
                     }
-                    else {
-                        $self->uri->widget->set_uri( $self->uri->uri->[-1] );
-                    }
+
+                    $uri ||=
+                      $self->config->setting('global')->{plugins}{uri}{default};
+                    $self->uri->widget->set_uri($uri);
                     $self->uri->widget->clicked;
                 },
             ];
