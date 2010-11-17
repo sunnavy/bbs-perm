@@ -22,7 +22,7 @@ my %component = (
 sub new {
     my ( $class, %opt ) = @_;
     my $self = {};
-    $opt{accel} //= 1;
+    $opt{accel} = 1 unless exists $opt{accel};
 
     if ( $self->{window} ) {
         if ( ref $self->{window} eq 'Gtk2::Window' ) {
