@@ -8,7 +8,7 @@ use File::HomeDir;
 use File::Spec::Functions 'catfile';
 my %args;
 die 'unknown option'
-  unless GetOptions( \%args, 'file|c=s', 'help|h' );
+  unless GetOptions( \%args, 'file|f=s', 'help|h' );
 
 my $USAGE = <<'END';
 USAGE: bbs-perm-config OPTIONS
