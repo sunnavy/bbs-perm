@@ -22,6 +22,7 @@ my %component = (
 sub new {
     my ( $class, %opt ) = @_;
     my $self = {};
+    $opt{accel} //= 1;
 
     if ( $self->{window} ) {
         if ( ref $self->{window} eq 'Gtk2::Window' ) {
@@ -57,7 +58,7 @@ sub new {
         }
     }
 
-    if ( not $opt{accel} ) {    # enable accel is default
+    if ( $opt{accel} ) {
         $self->_register_accel;
     }
 
@@ -100,14 +101,14 @@ sub _switch {
 sub _register_accel {
     my $self  = shift;
     my %accel = (
-        quit       => 'C-q',
-        copy       => 'M-c',
-        paste      => 'M-v',
+        quit       => 'MW-q',
+        copy       => 'MW-c',
+        paste      => 'MW-v',
         fullscreen => 'CM-f',
-        left_tab   => 'M-[',
-        right_tab  => 'M-]',
-        close_tab  => 'M-w',
-        feed       => 'C-f',
+        left_tab   => 'MW-[',
+        right_tab  => 'MW-]',
+        close_tab  => 'MW-w',
+        feed       => 'MW-f',
         $self->config->setting('global')->{shortcuts}
         ? %{ $self->config->setting('global')->{shortcuts} }
         : ()
@@ -186,7 +187,7 @@ sub _register_accel {
         for my $key ( 0 .. 9 ) {
             push @accels, [
                 $key,
-                ['mod1-mask'],
+                ['mod1-mask', 'super-mask'],
                 ['mask'],
                 sub {
                     my $uri;
@@ -202,8 +203,7 @@ sub _register_accel {
 
                     $uri ||=
                       $self->config->setting('global')->{plugins}{uri}{default};
-                    $self->uri->widget->set_uri($uri);
-                    $self->uri->widget->clicked;
+                    $self->uri->browse($uri);
                 },
             ];
         }
@@ -302,8 +302,6 @@ sub _contents_changed {
         $self->uri->clear;    # clean previous uri
         $self->uri->push($1)
           while $text =~ /($RE{URI}{HTTP} | $RE{URI}{FTP})/gx;
-
-        #        $self->uri->widget->set_label( $self->uri->show );
     }
     if ( $component{IP} ) {
         $self->ip->clear;     # and ip info.
