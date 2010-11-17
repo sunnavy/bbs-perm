@@ -3,13 +3,12 @@ use strict;
 use warnings;
 use Encode;
 
-use Test::More tests => 8;
+use Test::More tests => 7;
 
 BEGIN { use_ok('BBS::Perm::Plugin::URI'); }
 my $uri = BBS::Perm::Plugin::URI->new;
 
 isa_ok( $uri, 'BBS::Perm::Plugin::URI', '$uri' );
-isa_ok( $uri->widget, 'Gtk2::LinkButton', '$uri->widget' );
 
 $uri->pop;
 is( $uri->size, 0, 'pop 0 size' );
