@@ -104,11 +104,11 @@ sub _register_accel {
         quit       => 'MW-q',
         copy       => 'MW-c',
         paste      => 'MW-v',
-        fullscreen => 'CM-f',
-        left_tab   => 'MW-[',
-        right_tab  => 'MW-]',
-        close_tab  => 'MW-w',
-        feed       => 'MW-f',
+        fullscreen => 'MW-f',
+        left_tab   => 'M-[',
+        right_tab  => 'M-]',
+        close_tab  => 'M-w',
+        feed       => 'M-f',
         $self->config->setting('global')->{shortcuts}
         ? %{ $self->config->setting('global')->{shortcuts} }
         : ()
