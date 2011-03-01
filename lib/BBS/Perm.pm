@@ -105,9 +105,9 @@ sub _register_accel {
         copy       => 'MW-c',
         paste      => 'MW-v',
         fullscreen => 'MW-f',
+        close_tab  => 'MW-w',
         left_tab   => 'M-[',
         right_tab  => 'M-]',
-        close_tab  => 'M-w',
         feed       => 'M-f',
         $self->config->setting('global')->{shortcuts}
         ? %{ $self->config->setting('global')->{shortcuts} }
