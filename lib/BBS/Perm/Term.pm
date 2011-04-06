@@ -154,6 +154,9 @@ sub connect {
             $use_current_perl = 1;
         }
     }
+    elsif ( !-e $agent ) {
+        die "$agent doesn't exist";
+    }
 
     if ($agent) {
         $self->term->fork_command(
