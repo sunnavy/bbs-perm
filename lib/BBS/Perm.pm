@@ -343,7 +343,7 @@ BBS::Perm - a BBS client based on vte
 
 =head1 DESCRIPTION
 
-The name C<Perm> is the mergence of C<Perl> and C<Term>
+C<Perm> means C<Perl> + C<Term> here.
 
 here is a list L<BBS::Perm> can supply:
 
@@ -353,7 +353,7 @@ here is a list L<BBS::Perm> can supply:
 
 3. commit stuff from file or even command output directly.
 
-4. extract URIs and browse them quickly.
+4. browse URIs quickly.
 
 5. show information of IPv4 addresses, thanks to L<IP::QQWry>.
 
