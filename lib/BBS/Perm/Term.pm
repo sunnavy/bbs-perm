@@ -5,6 +5,7 @@ use strict;
 use Carp;
 use Glib qw/TRUE FALSE/;
 use Gnome2::Vte;
+use File::Spec::Functions 'file_name_is_absolute';
 
 sub new {
     my ( $class, %opt ) = @_;
@@ -147,6 +148,18 @@ sub connect {
 
     # check if it's a perl script
     my $use_current_perl;
+
+    unless ( file_name_is_absolute( $agent ) ) {
+        require File::Which;
+        my $path = File::Which::which( $agent );
+        if ( $path ) {
+            $agent = $path;
+        }
+        else {
+            die "can't find $agent";
+        }
+    }
+
     if ( -T $agent ) {
         open my $fh, '<', $agent or die "can't open $agent: $!";
         my $shebang = <$fh>;
