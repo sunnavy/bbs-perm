@@ -32,3 +32,11 @@ newsmth:
 # use MIME::Base64; encode_base64('password')
     password: cGFzc3dvcmQ=
     protocol_version: 1
+bash:
+  agent: /bin/bash
+  protocol: bash
+# use Alt+Win+l to load
+  shortcut: MW-l
+  title: bash
+  timeout: 0
+
