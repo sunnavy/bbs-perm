@@ -27,7 +27,8 @@ newsmth:
     shortcut: 'M-s'
     encoding: gbk
     title: sunnavy@newsmth
-    site: 60.2.251.8
+    site: newsmth.net
     username: sunnavy
 # use MIME::Base64; encode_base64('password')
     password: cGFzc3dvcmQ=
+    protocol_version: 1
