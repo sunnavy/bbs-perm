@@ -11,7 +11,7 @@ use BBS::Perm::Config;
 use UNIVERSAL::require;
 use UNIVERSAL::moniker;
 
-our $VERSION = '0.01';
+our $VERSION = '1.00';
 
 my %component = (
     IP   => 0,
