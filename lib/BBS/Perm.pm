@@ -411,7 +411,8 @@ return the main window object, which is a Gtk2::Window object.
 
 =head1 DEPENDENCIES
 
-L<Gtk2>, L<Regexp::Common>, L<UNIVERSAL::require>, L<UNIVERSAL::moniker>
+L<Gtk2>, L<Regexp::Common>, L<UNIVERSAL::require>, L<UNIVERSAL::moniker>,
+L<File::Which>
 
 =head1 INCOMPATIBILITIES
 
@@ -421,7 +422,7 @@ None reported.
 
 When a terminal is destroyed, if there is a warning like
 "gdk_window_invalidate_maybe_recurse: assertion `window != NULL' failed",
-please update you vte lib to 0.14 or above, this bug will gone, ;-)
+please update you vte lib to 0.14 or above, then this bug will be gone.
 
 =head1 AUTHOR
 
@@ -430,7 +431,7 @@ sunnavy  C<< <sunnavy@gmail.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2010, sunnavy C<< <sunnavy@gmail.com> >>. 
+Copyright (c) 2007-2011, sunnavy C<< <sunnavy@gmail.com> >>. 
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
