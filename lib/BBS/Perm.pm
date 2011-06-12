@@ -330,7 +330,7 @@ __END__
 
 =head1 NAME
 
-BBS::Perm - a component for your own BBS client
+BBS::Perm - a BBS client based on vte
 
 =head1 SYNOPSIS
 
@@ -343,25 +343,26 @@ BBS::Perm - a component for your own BBS client
 
 =head1 DESCRIPTION
 
-Want to build your own BBS client using Gtk2? Maybe L<BBS::Perm> can help you.
-
 The name C<Perm> is the mergence of C<Perl> and C<Term>
 
-With L<BBS::Perm>, you can:
+here is a list L<BBS::Perm> can supply:
 
-1. have multiple terminals at the same time, and quickly switch among them.
+1. multiple terminals and quickly switch between them.
 
 2. anti-idle
 
-3. commit sth. from file or even command output directly.
+3. commit stuff from file or even command output directly.
 
 4. extract URIs and browse them quickly.
 
-5. get useful information of IPv4 addresses, thanks to L<IP::QQWry>.
+5. show information of IPv4 addresses, thanks to L<IP::QQWry>.
 
 6. build your window layout freely.
 
 7. use your own agent script.
+
+
+Check out bin/bbs-perm and examples/bbspermrc for example.
 
 =head1 INTERFACE
 
